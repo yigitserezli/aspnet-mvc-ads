@@ -19,8 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Views\Shared\Partials\" />
-    <Folder Include="Views\Shared\Partials\Home\" />
+    <Folder Include="ViewComponents\" />
     <Folder Include="Views\Category\" />
     <Folder Include="Views\Advert\" />
     <Folder Include="Views\Page\" />
