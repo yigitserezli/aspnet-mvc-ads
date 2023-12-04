@@ -26,4 +26,11 @@
     <Folder Include="Views\Page\" />
     <Folder Include="Views\Auth\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App.Business\App.Business.csproj" />
+  </ItemGroup>
 </Project>
