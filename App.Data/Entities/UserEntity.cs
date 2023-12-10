@@ -2,6 +2,7 @@
 
 namespace App.Data.Entities
 {
+    //TestDenemeComment
     public class UserEntity : BaseEntity
     {
         [Required, Range(3, 50)]
