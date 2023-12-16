@@ -26,10 +26,12 @@ namespace App.Data.Entities
 
 
         public ICollection<AdvertCommentsEntity> AdvertComments { get; set; }
+        public ICollection<BlogCommentsEntity> BlogComments { get; set; }
         public ICollection<AdvertEntity> Adverts { get; set; }
         //public ICollection<BlogEntity> Blogs { get; set; }
         //public ICollection<BlogCommentsEntity> BlogComments { get; set; }
         public ICollection<CustomerFavListentity> CustomerFavs { get; set; }
+        public ICollection<OrderstEntity> Orders { get; set; }
         //public ICollection<UserRoleEntity> UserRoles { get; set; }
 
 
