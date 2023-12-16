@@ -31,6 +31,8 @@ using Microsoft.EntityFrameworkCore;
         builder.Services.AddSingleton<IHashService, HashService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAuthService, CookieAuthService>();
+        builder.Services.AddScoped<ICategoryService, CategoryService>();
+        builder.Services.AddScoped<IAdvertService, AdvertService>();
 
 
         var app = builder.Build();

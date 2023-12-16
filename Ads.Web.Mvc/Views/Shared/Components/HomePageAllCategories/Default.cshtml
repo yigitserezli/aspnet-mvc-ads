@@ -1,0 +1,43 @@
+﻿@using App.Models.CategoryDTOs
+@model ICollection<HomePageCategoryListDTO>;
+
+
+
+
+<section class=" section">
+    <!-- Container Start -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Section title -->
+                <div class="section-title">
+                    <h2>All Categories</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, provident!</p>
+                </div>
+                <div class="row">
+                    @foreach(var item in Model)
+                    {
+                    <!-- Category list -->
+                    <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
+                        <div class="category-block">
+                            <div class="header">
+                                <i class="fa fa-laptop icon-bg-1"></i>
+                                <h4>@item.categoryName</h4>
+                            </div>
+                            <ul class="category-list">
+                                @foreach(var item2 in item.subCategories)
+                                {
+                                <li><a href="category.html">@item2.Name <span>@item2.AdvertCount</span></a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div> <!-- /Category List -->
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container End -->
+</section>
