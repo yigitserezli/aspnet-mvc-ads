@@ -21,9 +21,9 @@ namespace App.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.User).WithMany(z => z.AdvertComments).HasForeignKey(c=>c.UserId).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.Advert).WithMany(z => z.AdvertComments).HasForeignKey(c => c.AdvertId).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<CustomerFavListentity>().HasOne(c => c.User).WithMany(z => z.CustomerFavs).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.User).WithMany(z => z.AdvertComments).HasForeignKey(c=>c.UserId).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.Advert).WithMany(z => z.AdvertComments).HasForeignKey(c => c.AdvertId).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<CustomerFavListentity>().HasOne(c => c.User).WithMany(z => z.CustomerFavs).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientCascade);
          
 
 
