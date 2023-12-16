@@ -12,7 +12,9 @@ namespace App.Data.Entities
         [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        public int parentCategoryID { get; set; }
+        public int? parentCategoryID { get; set; }
+        public CategoryEntity? parentCategory { get; set; }
+
         public ICollection<AdvertEntity> Adverts { get; set; }
 
         

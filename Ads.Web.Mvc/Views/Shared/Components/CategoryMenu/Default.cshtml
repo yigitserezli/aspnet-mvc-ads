@@ -1,0 +1,106 @@
+﻿@using App.Business;
+@using App.Data.Entities;
+@using Microsoft.AspNetCore.Html;
+@using System.Text;
+@model List<CategoryEntity>
+@inject ICategoryService CategoryService
+
+
+
+
+
+@*
+@functions {
+    public HtmlString RenderCategory(int? id)
+    {
+        var result = new StringBuilder();
+
+        result.Append("<ul>");
+        foreach (var subCategory in Model.Where(x => x.parentCategoryID == id))
+        {
+            result.Append("<li>");
+            result.Append($"<span>{subCategory.Name}</span>");
+            result.Append(RenderCategory(subCategory.Id));
+            result.Append("</li>");
+        }
+        result.Append("</ul>");
+
+        return new HtmlString(result.ToString());
+    }
+}
+
+<div>
+    @RenderCategory(null)
+</div>
+ *@
+
+
+
+
+@functions {
+    public HtmlString RenderCategory2(int? id)
+    {
+        var result = new StringBuilder();
+
+        result.Append("<div class='accordion accordion-flush' id='menuakordiyon'>");
+        foreach (var subCategory in Model.Where(x => x.parentCategoryID == id))
+        {
+            string categoryName = subCategory.Name.Replace(" ", "");
+            categoryName = categoryName + subCategory.Id;
+            result.Append("<div class='accordion-item'>");
+
+            result.AppendFormat("<h2 class='accordion-header' id='{0}h'>", categoryName);
+            result.AppendFormat("<button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#{0}' aria-expanded='false' aria-controls='{0}'>{0}</button>", categoryName);
+            result.Append("</h2>");
+            result.AppendFormat("<div id='{0}' class='accordion-collapse collapse' aria-labelledby='{0}' data-bs-parent='menuakordiyon'>",categoryName);
+            result.AppendFormat("<div class=''><a asp-action='Index' asp-controller='Home' asp-area='' asp-route-id='1'><span class='badge bg-primary'>Tümünü Göster</span></a>", categoryName);
+            result.Append(RenderCategory2(subCategory.Id));
+            result.Append("</div></div>");
+
+            result.Append("</div>");
+        }
+        result.Append("</div>");
+
+        return new HtmlString(result.ToString());
+    }
+}
+
+<div class="widget category-list">
+    <h4 class="widget-header">All Category</h4>
+    @RenderCategory2(null)
+</div>
+
+
+@*
+<div class="widget category-list">
+    <h4 class="widget-header">All Category</h4>
+
+    <div class="accordion" id="accordionExample">
+        @foreach(var item in Model)
+        {
+            string kategori = item.Name.Replace(" ", "");
+            kategori = kategori + item.Id;
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@kategori" aria-expanded="false" aria-controls="@kategori">
+                        Accordion Item #1
+                    </button>
+                </h2>
+                <div id="@kategori" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <a asp-action="Index" asp-controller="Home" asp-area="" asp-route-id="1"><span class="badge bg-primary">Tümünü Göster</span></a>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+</div>
+
+ *@
+
