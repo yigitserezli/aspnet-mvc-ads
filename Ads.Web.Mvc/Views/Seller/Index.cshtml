@@ -19,7 +19,10 @@
                         <p class="card-text">Stock Count: @advert.StockCount</p>
                         <p class="card-text">Category: @advert.CategoryId</p>
                         <p class="card-text">Confirmed ?: @advert.Confirm</p>
-                        <a href="@Url.Action("Edit", "Seller", new { id = advert.Id })" class="btn btn-primary">Edit</a>
+
+                        <a asp-controller="Seller" asp-action="Edit" asp-route-id="@advert.Id" class="btn btn-primary">Edit</a>
+                        <a asp-controller="Seller" asp-action="MyAdDetail" asp-route-id="@advert.Id" class="btn btn-primary">Show detail</a>
+
                     </div>
                 </div>
             </div>

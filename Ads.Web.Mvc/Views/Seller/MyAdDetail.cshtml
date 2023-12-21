@@ -1,5 +1,5 @@
-﻿@using App.Models;
-@model AdvertDto;
+﻿@using App.Data.Entities;
+@model AdvertEntity;
   
 
 
@@ -13,9 +13,15 @@
         <p>Created At: @Model.CreatedAt</p>
         <p>Updated At: @Model.UpdatedAt</p>
         <p>Stock Count: @Model.StockCount</p>
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
         <p>Image: <img src="~/images/adverts/@Model.ImageUrl" alt="Advert Image" /></p>
+    }
+       
         <p>Confirmed: @Model.Confirm</p>       
         <p>Category ID: @Model.CategoryId</p>
+
+    <a asp-controller="Seller" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
 
     <h2>Advert Comments</h2>
     @if (Model.AdvertComments != null && Model.AdvertComments.Any())

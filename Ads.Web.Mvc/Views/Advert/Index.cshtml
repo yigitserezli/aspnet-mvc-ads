@@ -20,8 +20,8 @@
                         <p class="card-text">Stock Count: @advert.StockCount</p>
                         <p class="card-text">Category: @advert.CategoryId</p>
 
-                        <a asp-controller="Advert" asp-action="AddFavorite" asp-route-id="@advert.Id" class="btn btn-primary">add favorite</a>
-                        <a asp-controller="Advert" asp-action="AdDetail" asp-route-id="@advert.Id" class="btn btn-primary">add favorite</a>
+                        <a asp-controller="Advert" asp-action="Favorite" asp-route-id="@advert.Id" class="btn btn-primary">add favorite</a>
+                        <a asp-controller="Advert" asp-action="AdDetail" asp-route-id="@advert.Id" class="btn btn-primary">show detail</a>
 
                     </div>
                 </div>
