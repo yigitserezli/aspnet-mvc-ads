@@ -1,5 +1,4 @@
-﻿
-using App.Data.Entities;
+﻿using App.Data.Entities;
 using App.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -36,8 +35,9 @@ namespace Ads.Web.Mvc.Controllers
         public IActionResult AdDetail(int id)
         {
             var advert = _dbContext.Adverts
-                  .Include(a => a.AdvertComments)
-                  .FirstOrDefault(a => a.Confirm == true);
+           .Include(a => a.AdvertComments.Where(ac => ac.Confirm))
+           .Include(a => a.CustomerFavList)
+           .FirstOrDefault(a => a.Id == id && a.Confirm==true);
 
             if (advert != null)
             {
@@ -47,14 +47,19 @@ namespace Ads.Web.Mvc.Controllers
             return NotFound();
         }
 
-
+      
         // MY FAVORITES
         public IActionResult MyFavorites()
         {
-        
-            var MyFavorites = _dbContext.CustomerFavLists.Where(a => a.UserId == userId).ToList();
+
+            var MyFavorites = _dbContext.CustomerFavLists
+                         .Where(a => a.UserId == userId)
+                         .Include(fav => fav.Advert) 
+                         .ToList();
+
             return View(MyFavorites);
         }
+
 
         public IActionResult Favorite(int id)
         {

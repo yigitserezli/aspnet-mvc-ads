@@ -13,7 +13,10 @@
         <p>Created At: @Model.CreatedAt</p>
         <p>Updated At: @Model.UpdatedAt</p>
         <p>Stock Count: @Model.StockCount</p>
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
         <p>Image: <img src="~/images/adverts/@Model.ImageUrl" alt="Advert Image" /></p>
+    }
         <p>Confirmed: @Model.Confirm</p>       
         <p>Category ID: @Model.CategoryId</p>
     <a asp-controller="Advert" asp-action="Favorite" asp-route-id="@Model.Id" class="btn btn-primary">add favorite</a>

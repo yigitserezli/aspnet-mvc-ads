@@ -64,15 +64,14 @@ namespace Ads.Web.Mvc.Controllers
         }
         public IActionResult MyAdDetail([FromRoute] int id)
         {
-            var advertEntity = _dbContext.Adverts.FirstOrDefault(a => a.Id == id);
+            var MyAdvert = _dbContext.Adverts
+         .Include(a => a.AdvertComments)
+         .Include(a => a.CustomerFavList) 
+         .FirstOrDefault(a => a.Id == id);
 
-            if (advertEntity != null)
-            {
-                var advertDto = _mapper.Map<AdvertEntity, AdvertDto>(advertEntity);
-                return View("MyAdDetail", advertDto);
-            }
 
-            return NotFound();
+            return View(MyAdvert);
+         
         }
 
 

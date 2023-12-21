@@ -1,5 +1,5 @@
 ﻿@using App.Data.Entities;
-@model List<AdvertEntity>
+@model List<CustomerFavListentity>
 
 <title>Favorite List</title>
 
@@ -12,16 +12,16 @@
             <div class="col-md-4">
                 <div class="card m-2">
                     <div class="card-body">
-                        <h5 class="card-title bg-gray">Name: @advert.Name</h5>
-                        <p class="card-text">Description: @advert.Description</p>
-                        <p class="card-text">Price: @advert.Price</p>
-                        <p class="card-text">Created At: @advert.CreatedAt</p>
-                        <p class="card-text">Updated At: @advert.UpdatedAt</p>
-                        <p class="card-text">Stock Count: @advert.StockCount</p>
-                        <p class="card-text">Category: @advert.CategoryId</p>
+                        <h5 class="card-title bg-gray">Name: @advert.Advert.Name</h5>
+                        <p class="card-text">Description: @advert.Advert.Description</p>
+                        <p class="card-text">Price: @advert.Advert.Price</p>
+                        <p class="card-text">Created At: @advert.Advert.CreatedAt</p>
+                        <p class="card-text">Updated At: @advert.Advert.UpdatedAt</p>
+                        <p class="card-text">Stock Count: @advert.Advert.StockCount</p>
+                        <p class="card-text">Category: @advert.Advert.CategoryId</p>
 
-                        <a asp-controller="Advert" asp-action="CheckFavorite" asp-route-id="@advert.Id" class="btn btn-primary">Delete favorite</a>
-                        <a asp-controller="Advert" asp-action="AdDetail" asp-route-id="@advert.Id" class="btn btn-primary">add favorite</a>
+                        <a asp-controller="Advert" asp-action="Favorite" asp-route-id="@advert.Id" class="btn btn-primary">Delete favorite</a>
+                        <a asp-controller="Advert" asp-action="AdDetail" asp-route-id="@advert.Advert.Id" class="btn btn-primary">Show Detail</a>
 
                     </div>
                 </div>
