@@ -1,4 +1,5 @@
-﻿using App.Data.Entities;
+﻿using Ads.Web.Mvc.Models;
+using App.Data.Entities;
 using App.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,13 @@ namespace Ads.Web.Mvc.ViewComponents
 
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(LoginViewModel model)
         {
              
 
 
 
-                return View();
+                return View(model);
             
         }
 

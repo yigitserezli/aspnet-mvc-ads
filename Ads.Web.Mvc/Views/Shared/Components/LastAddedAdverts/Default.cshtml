@@ -1,5 +1,5 @@
 ﻿@using App.Data.Entities;
-@model ICollection<AdvertEntity>;
+@model List<AdvertEntity>;
 
 
 
@@ -42,7 +42,17 @@
                                     <h4 class="card-title"><a href="single.html">@item.Name</a></h4>
                                     <ul class="list-inline product-meta">
                                         <li class="list-inline-item">
-                                            <a href="single.html"><i class="fa fa-folder-open-o"></i>@item.Category.Name</a>
+                                          
+
+                                                @if (item.Category != null)
+                                                {
+            <a href="single.html"><i class="fa fa-folder-open-o"></i>@item.Category.Name</a>
+                                                }
+                                                else
+                                                {
+            <p>No category available</p>
+                                                }
+
                                         </li>
                                         <li class="list-inline-item">
                                             <a href="#"><i class="fa fa-calendar"></i>@item.CreatedAt</a>

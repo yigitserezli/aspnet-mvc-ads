@@ -1,0 +1,31 @@
+﻿@using App.Data.Entities;
+@model List<AdvertEntity>
+
+<title>Adverts List</title>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Adverts List</h1>
+
+    <div class="row">
+        @foreach (var advert in Model)
+        {
+            <div class="col-md-4">
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h5 class="card-title bg-gray">Name: @advert.Name</h5>
+                        <p class="card-text">Description: @advert.Description</p>
+                        <p class="card-text">Price: @advert.Price</p>
+                        <p class="card-text">Created At: @advert.CreatedAt</p>
+                        <p class="card-text">Updated At: @advert.UpdatedAt</p>
+                        <p class="card-text">Stock Count: @advert.StockCount</p>
+                        <p class="card-text">Category: @advert.CategoryId</p>
+
+                        <a asp-controller="Advert" asp-action="AddFavorite" asp-route-id="@advert.Id" class="btn btn-primary">add favorite</a>
+                        <a asp-controller="Advert" asp-action="AdDetail" asp-route-id="@advert.Id" class="btn btn-primary">add favorite</a>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

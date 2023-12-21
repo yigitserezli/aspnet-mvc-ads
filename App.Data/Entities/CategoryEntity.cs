@@ -17,7 +17,6 @@ namespace App.Data.Entities
 
         public ICollection<AdvertEntity> Adverts { get; set; }
 
-        
         public int categoryPopularityIndex { get; set; } // Bu kategori altındaki ilanlara girildiğinde DB deki bu değer 1 artart böylelikle anasayfadaki popüler kategoriler alanını dinamik olarak değiştirebiliriz. 
     }
 }

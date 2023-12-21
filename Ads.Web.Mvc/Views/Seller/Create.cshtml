@@ -1,0 +1,46 @@
+﻿@using App.Data.Entities;
+@model AdvertEntity
+
+<form asp-action="Create" asp-controller="Seller" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StockCount"></label>
+        <input asp-for="StockCount" class="form-control" />
+        <span asp-validation-for="StockCount" class="text-danger"></span>
+    </div>
+
+   
+    
+                <select asp-for="CategoryId" asp-items="@ViewBag.SelectItem" class="form-control">
+                    <option value="" selected disabled>Seçiminiz...</option>
+                </select>
+ 
+
+
+
+    <div class="form-group">
+
+        <input type="file" name="ImageUrl" class="form-control" />
+
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -25,7 +25,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Category\" />
-    <Folder Include="Views\Advert\" />
     <Folder Include="Views\Page\" />
   </ItemGroup>
   <ItemGroup>

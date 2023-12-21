@@ -1,0 +1,28 @@
+﻿@model List<App.Data.Entities.AdvertEntity>
+
+<title>Adverts List</title>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Adverts List</h1>
+
+    <div class="row">
+        @foreach (var advert in Model)
+        {
+            <div class="col-md-4">
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h5 class="card-title bg-gray">Name: @advert.Name</h5>
+                        <p class="card-text">Description: @advert.Description</p>
+                        <p class="card-text">Price: @advert.Price</p>
+                        <p class="card-text">Created At: @advert.CreatedAt</p>
+                        <p class="card-text">Updated At: @advert.UpdatedAt</p>
+                        <p class="card-text">Stock Count: @advert.StockCount</p>
+                        <p class="card-text">Category: @advert.CategoryId</p>
+                        <p class="card-text">Confirmed ?: @advert.Confirm</p>
+                        <a href="@Url.Action("Edit", "Seller", new { id = advert.Id })" class="btn btn-primary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
