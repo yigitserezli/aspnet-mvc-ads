@@ -19,7 +19,7 @@ namespace App.Data
         public DbSet<BlogEntity> Blogs { get; set; }
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<CustomerFavListentity> CustomerFavLists { get; set; }
-        public DbSet<OrderstEntity> Orders { get; set; }
+        public DbSet<OrdersEntity> Orders { get; set; }
         public DbSet<RoleEntity> RoleEntities { get; set; }
         public DbSet<UserEntity> Users { get; set; } 
         public DbSet<UserRoleEntity> UserRoles { get; set; }
@@ -29,9 +29,9 @@ namespace App.Data
             modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.User).WithMany(z => z.AdvertComments).HasForeignKey(c=>c.UserId).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.Advert).WithMany(z => z.AdvertComments).HasForeignKey(c => c.AdvertId).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<CustomerFavListentity>().HasOne(c => c.User).WithMany(z => z.CustomerFavs).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<OrderstEntity>().HasOne(c => c.User).WithMany(z => z.Orders).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<OrderstEntity>().HasOne(o => o.User).WithMany(u => u.Orders).HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<OrderstEntity>().HasOne(o => o.Advert).WithMany(a => a.Orders).HasForeignKey(o => o.AdvertId).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<OrdersEntity>().HasOne(c => c.User).WithMany(z => z.Orders).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<OrdersEntity>().HasOne(o => o.User).WithMany(u => u.Orders).HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<OrdersEntity>().HasOne(o => o.Advert).WithMany(a => a.Orders).HasForeignKey(o => o.AdvertId).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<BlogCommentsEntity>().HasOne(b => b.User).WithMany(u => u.BlogComments).HasForeignKey(b => b.UserId).OnDelete(DeleteBehavior.ClientCascade);
 
         }
