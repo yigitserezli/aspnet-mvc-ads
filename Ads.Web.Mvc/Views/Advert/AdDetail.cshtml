@@ -1,46 +1,57 @@
 ﻿@using App.Data.Entities
-@model AdvertEntity;
-  
+@model AdvertEntity
 
+<h1>@Model.Name</h1>
 
-   
-    <h1>@Model.Name</h1>
-
-   
-    <div>
-        <p>Description: @Model.Description</p>
-        <p>Price: @Model.Price</p>
-        <p>Created At: @Model.CreatedAt</p>
-        <p>Updated At: @Model.UpdatedAt</p>
-        <p>Stock Count: @Model.StockCount</p>
+<div>
+    <p>Description: @Model.Description</p>
+    <p>Price: @Model.Price</p>
+    <p>Created At: @Model.CreatedAt</p>
+    <p>Updated At: @Model.UpdatedAt</p>
+    <p>Stock Count: @Model.StockCount</p>
     @if (!string.IsNullOrEmpty(Model.ImageUrl))
     {
         <p>Image: <img src="~/images/adverts/@Model.ImageUrl" alt="Advert Image" /></p>
     }
-        <p>Confirmed: @Model.Confirm</p>       
-        <p>Category ID: @Model.CategoryId</p>
-    <a asp-controller="Advert" asp-action="Favorite" asp-route-id="@Model.Id" class="btn btn-primary">add favorite</a>
+       <p>Category ID: @Model.CategoryId</p>
+    <a asp-controller="Advert" asp-action="Favorite" asp-route-id="@Model.Id" class="btn btn-primary">Add Favorite</a>
+</div>
+<div>
+    <h2>Place Order</h2>
+    <form asp-controller="Advert" asp-action="PlaceOrder" asp-route-id="@Model.Id" method="post">
+        <input type="hidden" name="advertId" asp-for="Id" />
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" class="form-control" min="1" max="@Model.StockCount" required />
+        </div>
+        <button type="submit" class="btn btn-success">Buy Now</button>
+    </form>
+</div>
 
 
-    <h2>Advert Comments</h2>
-    @if (Model.AdvertComments != null && Model.AdvertComments.Any())
-    {
-        <ul>
-            @foreach (var comment in Model.AdvertComments)
-            {
-                <li>@comment.Message</li>
-            }
-        </ul>
-    }
-    else
-    {
-        <p>Hiç yorum yapılmamış.</p>
-    }
+<h2>Advert Comments</h2>
+@if (Model.AdvertComments != null && Model.AdvertComments.Any())
+{
+    <ul>
+        @foreach (var comment in Model.AdvertComments)
+        {
+            <li>@comment.Message</li>
+            
+        }
+    </ul>
+}
+else
+{
+    <p>No comments yet.</p>
+}
 
 
-       </div>
+
 <p>Favorites Count: @(Model.CustomerFavList != null ? Model.CustomerFavList.Count() : 0)</p>
 
-   
+
+
+
+
 
 

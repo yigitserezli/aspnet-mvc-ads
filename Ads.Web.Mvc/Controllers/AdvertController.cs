@@ -3,6 +3,7 @@ using App.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 
 
@@ -84,6 +85,60 @@ namespace Ads.Web.Mvc.Controllers
             return Ok("Favorite added");
         }
 
+
+        public IActionResult PlaceOrder(int advertId, int quantity)
+        {
+            var advert = _dbContext.Adverts.FirstOrDefault(a => a.Id == advertId);
+
+            if (advert == null)
+            {
+                return NotFound("Advert not found!");
+            }
+
+            if (quantity > advert.StockCount)
+            {
+                return BadRequest("Ordered quantity exceeds available stock!");
+            }
+                       
+            var oldStockCount = advert.StockCount;
+            advert.StockCount -= quantity;
+            var orderPrice = advert.Price * quantity;
+          
+            var existingOrder = _dbContext.Orders.FirstOrDefault(o => o.AdvertId == advertId);
+
+            if (existingOrder != null)
+            {
+                existingOrder.Quantity += quantity;
+                _dbContext.Orders.Update(existingOrder);
+            }
+            else
+            {
+               
+                var newOrder = new OrdersEntity
+                {
+                    AdvertId = advertId,
+                    UserId = userId,
+                    Quantity = quantity,
+                    Price = orderPrice, 
+                    OrderDate = DateTime.UtcNow,
+                };
+
+                _dbContext.Orders.Add(newOrder);
+            }
+
+            _dbContext.SaveChanges();
+
+            return Ok();
+        }
+
+        public IActionResult MyOrders()
+        {
+            var adverts = _dbContext.Orders
+                .Where(a => a.UserId == userId)
+                .Include(a =>a.Advert)
+                .ToList();
+            return View(adverts);
+        }
 
 
 
