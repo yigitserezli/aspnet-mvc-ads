@@ -4,12 +4,14 @@ using Microsoft.Extensions.Logging;
 using App.Data;
 using App.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Business
 {
     public interface IUserService
     {
         Task<ServiceResult<UserDto>> GetUserByIdAsync(int id);
+        Task<ServiceResult<List<string>>> GetUserRolesFromUserId(int id);
         Task<ServiceResult<UserDto>> GetUserByUsernameAsync(string username);
         Task<ServiceResult> CreateUser(string username, string password,string name,string surname, string address);
     }
@@ -71,6 +73,13 @@ namespace App.Business
                 return ServiceResult.Fail("Error creating user", StatusCodes.Status500InternalServerError);
             }
         }
+        public async Task<ServiceResult<List<string>>> GetUserRolesFromUserId(int id)
+        {
+            List<String> RoleNameList = await _dbContext.UserRoles.Where(x => x.UserId == id).Select(u => u.Role.Name).ToListAsync();
+       
+            return ServiceResult.Success(RoleNameList);
+        }
+
 
         public async Task<ServiceResult<UserDto>> GetUserByIdAsync(int id)
         {

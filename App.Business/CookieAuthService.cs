@@ -61,13 +61,19 @@ namespace App.Business
                 {
                     return ServiceResult.Fail("Username or password is incorrect", StatusCodes.Status401Unauthorized);
                 }
-
-                var claims = new[]
+                var RoleList = await UserService.GetUserRolesFromUserId(user.Id);
+                List<Claim> claims =new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.Username),
-                    new Claim("c-time", DateTime.UtcNow.ToString())
+                    new Claim("c-time", DateTime.UtcNow.ToString()),
+                  
                 };
+                foreach (var item in RoleList.Data)
+                { 
+                claims.Add(new Claim(ClaimTypes.Role,item));
+                }
+
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);

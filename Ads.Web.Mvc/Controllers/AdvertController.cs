@@ -3,7 +3,10 @@ using App.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using App.Business;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+
 
 
 
@@ -14,10 +17,13 @@ namespace Ads.Web.Mvc.Controllers
     public class AdvertController : Controller
     {
         private readonly AppDbContext _dbContext;
-        public AdvertController(AppDbContext dbContext)
+        private readonly IAdvertService _advertService;
+
+        public AdvertController(AppDbContext dbContext, IAdvertService advertService)
 
         {
             _dbContext = dbContext;
+            _advertService = advertService;
 
         }
         // GET: /<controller>/
@@ -26,6 +32,8 @@ namespace Ads.Web.Mvc.Controllers
         public int userId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
         // GET: Advert/Index
+        [Authorize(Roles = "Admin,User")]
+        
         public IActionResult Index()
         {
             var adverts = _dbContext.Adverts.Where(a => a.Confirm == true).ToList();
@@ -85,6 +93,25 @@ namespace Ads.Web.Mvc.Controllers
             return Ok("Favorite added");
         }
 
+        [HttpGet]
+        public IActionResult AddAdvert()
+        {
+
+
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddAdvert([FromForm]IFormFile ImageUrl, AdvertEntity advert, int userId)
+        {
+            int user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var test = await _advertService.AddAdvertToDb(ImageUrl, advert, user);
+
+
+            return View();
+        }
 
         public IActionResult PlaceOrder(int advertId, int quantity)
         {

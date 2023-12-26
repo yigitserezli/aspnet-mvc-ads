@@ -1,6 +1,7 @@
 ﻿using App.Data;
 using App.Data.Entities;
 using App.Models.CategoryDTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,7 +17,8 @@ namespace App.Business
         Task<ServiceResult<ICollection<AdvertEntity>>> GetAdverts(int id);
         Task<ServiceResult<ICollection<AdvertEntity>>> GetLastTenAdverts();
         Task<ServiceResult<List<AdvertEntity>>> GetAllAdvertsUnderGivenCategory(int id);
-
+        Task<ServiceResult<AdvertEntity>> AddAdvertToDb(IFormFile ImageUrl, AdvertEntity advert, int userId);
+        
 
     }
 
@@ -50,7 +52,11 @@ namespace App.Business
         public async Task<ServiceResult<ICollection<AdvertEntity>>> GetLastTenAdverts()
         {
 
-            ICollection<AdvertEntity> list = await _dbContext.Adverts.OrderByDescending(x => x.CreatedAt).Take(10).ToListAsync();
+            ICollection<AdvertEntity> list = await _dbContext.Adverts
+                .Include(a => a.Category) // Include ekleyin
+                .OrderByDescending(x => x.CreatedAt)
+                .Take(10)
+                .ToListAsync();
             return ServiceResult.Success(list);
         }
 
@@ -71,6 +77,86 @@ namespace App.Business
                 GetAdvertList(subCategory.Id, allAdverts);
             }
         }
+
+
+
+        private string GetMimeType(string fileName)
+        {
+            //    var provider = new FileExtensionContentTypeProvider();
+            //     if (!provider.TryGetContentType(fileName, out var contentType))
+            //      {
+            //          contentType = "octet-stream";
+            //     }
+            return Path.GetExtension(fileName);
+            //  return contentType;
+        }
+
+
+
+
+        private string GetUploadFolder()
+        {
+            var uploadsFolder = Path.Combine(Environment.CurrentDirectory, "wwwroot", "images", "adverts");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            return uploadsFolder;
+        }
+
+
+        public async Task<ServiceResult<AdvertEntity>> AddAdvertToDb(IFormFile ImageUrl, AdvertEntity advert , int userId)
+        {
+
+            if (ImageUrl != null && ImageUrl.Length > 0)
+            {
+
+
+
+                var Advert = new AdvertEntity
+                {
+                    Name = advert.Name,
+                    Description = advert.Description,
+                    Price = advert.Price,
+                    CreatedAt = DateTime.UtcNow,
+                    StockCount = advert.StockCount,
+                    Confirm = false,
+                    CategoryId = advert.CategoryId,
+                    UserId = userId,
+                    ImageUrl = "",
+
+                };
+
+                _dbContext.Adverts.Add(Advert);
+                await _dbContext.SaveChangesAsync();
+
+                Advert.ImageUrl = "adv" + Advert.Id + Path.GetExtension(ImageUrl.FileName);
+                var fullFilePath = Path.Combine(GetUploadFolder(), Advert.ImageUrl);
+
+                using (var fileStream = new FileStream(fullFilePath, FileMode.Create))
+                {
+                    await ImageUrl.CopyToAsync(fileStream);
+                    await fileStream.FlushAsync(); // Stream'i temizle
+                }
+
+
+                using (var stream = new FileStream(fullFilePath, FileMode.Create))
+                {
+                    await ImageUrl.CopyToAsync(stream);
+                }
+
+                _dbContext.Entry(Advert).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+            }
+
+
+            return ServiceResult.Success(advert, StatusCodes.Status201Created);
+        }
+
+
+
+
     }
 }
 
