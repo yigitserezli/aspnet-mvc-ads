@@ -1,6 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 @await Html.PartialAsync("Partials/Home/_head")
+<script src="~/plugins/jQuery/jquery.min.js"></script>
+
 <body class="body-wrapper">
 
  @await Html.PartialAsync("Partials/Home/_topMenu")
@@ -10,9 +12,9 @@
 
 
 @await Html.PartialAsync("Partials/Home/_footer")
-@await Html.PartialAsync("Partials/Home/_copyright")    
-@await Html.PartialAsync("Partials/Home/_scripts")
-@await RenderSectionAsync("Scripts", required: false)
+@await Html.PartialAsync("Partials/Home/_copyright")
+    @await Html.PartialAsync("Partials/Home/_scripts")
+
 
 
 </body>

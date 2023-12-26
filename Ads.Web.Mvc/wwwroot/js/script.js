@@ -107,7 +107,7 @@
 
   // niceSelect
 
-  $('select:not(.ignore)').niceSelect();
+/*  $('select:not(.ignore)').niceSelect();*/
 
   // blog post-slider
   $('.post-slider').slick({
@@ -228,3 +228,5 @@
 
 
 })(jQuery);
+
+
