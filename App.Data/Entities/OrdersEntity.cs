@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.Data.Entities
 {
-    public class OrderstEntity : BaseEntity
+    public class OrdersEntity : BaseEntity
     {
         public UserEntity User { get; set; }
         public AdvertEntity Advert { get; set; }
@@ -16,7 +17,12 @@ namespace App.Data.Entities
         public int AdvertId { get; set; }
         public int UserId { get; set; }
         public int Quantity { get; set; }
-       
+       public decimal Price { get; set; } //yeni eklendi
+
+        [DataType(dataType: DataType.Date)]
+        public DateTime OrderDate { get; set; }
+        
+
 
 
 

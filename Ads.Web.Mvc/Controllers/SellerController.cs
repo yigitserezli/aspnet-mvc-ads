@@ -196,32 +196,7 @@ namespace Ads.Web.Mvc.Controllers
         //    return View(model);
         }
 
-
-
-
-
-
-
-
-
-
         //dosya yükleme işlemi için gerektli metodler
-
-
-        private string GetMimeType(string fileName)
-        {
-            //    var provider = new FileExtensionContentTypeProvider();
-            //     if (!provider.TryGetContentType(fileName, out var contentType))
-            //      {
-            //          contentType = "octet-stream";
-            //     }
-            return Path.GetExtension(fileName);
-          //  return contentType;
-        }
-
-
-
-
         private string GetUploadFolder()
         {
             var uploadsFolder = Path.Combine(Environment.CurrentDirectory, "wwwroot", "images", "adverts");

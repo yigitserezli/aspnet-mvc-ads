@@ -41,7 +41,7 @@ namespace App.Models
         public ICollection<AdvertCommentsEntity> AdvertComments { get; set; }
 
 
-        public ICollection<OrderstEntity> Orders { get; set; }
+        public ICollection<OrdersEntity> Orders { get; set; }
         public ICollection<CustomerFavListentity> CustomerFavList { get; set; }
         //
         public int FavoriteCount

@@ -1,0 +1,34 @@
+﻿@using App.Data.Entities;
+@model List<OrdersEntity>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Orders List</h1>
+
+    <ul class="list-group">
+        @foreach (var order in Model)
+        {
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Name: @order.Advert.Name</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Price: @(order.Price / order.Quantity)</p>
+                    </div> 
+                    <div class="col-md-4">
+                        <p>Total : @(order.Price)</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Order Date: @order.OrderDate</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Category: @order.Advert.CategoryId</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><a asp-controller="advert" asp-action="adDetail" asp-route-id="@order.Advert.Id">Advert Detail</a></p>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
