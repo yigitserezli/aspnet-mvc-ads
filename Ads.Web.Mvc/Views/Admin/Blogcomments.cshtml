@@ -1,0 +1,46 @@
+﻿@using App.Data.Entities;
+@model List<BlogCommentsEntity>
+@{
+    int pageSize = 10;
+    int nextPage = ViewBag.Page + 1;
+    int prevPage = ViewBag.Page - 1;
+}
+<h1>Unconfirmed Blog Comments</h1>
+
+@if (Model.Count == 0)
+{
+    <p>No comments to confirm.</p>
+}
+else
+{
+    <table class="table mb-4 ml-4">
+        @foreach (var comment in Model)
+        {
+            <tr>
+                <td class="content-preview">
+                    @if (comment.Content.Length > 100)
+                    {
+                        <p title="@comment.Content">@comment.Content.Substring(0, 100)...</p>
+                    }
+                    else
+                    {
+                        <p>@comment.Content</p>
+                    }
+                </td>
+                <td><a asp-controller="admin" asp-action="BCommentConfirm" asp-route-id="@comment.Id">Confirm</a></td>
+                <td><a asp-controller="Blogger" asp-action="EditComment" asp-route-id="@comment.Id">Edit (şu an pasif )</a></td>
+                <td><a asp-controller="admin" asp-action="BCommentDelete" asp-route-id="@comment.Id">Delete</a></td>
+            </tr>
+        }
+    </table>
+
+    @if (prevPage > 0)
+    {
+        <a href="@Url.Action("Blogcomments", "Admin", new { page = prevPage })">Previous</a>
+    }
+
+    @if (Model.Count == pageSize)
+    {
+        <a href="@Url.Action("Blogcomments", "Admin", new { page = nextPage })">Next</a>
+    }
+}

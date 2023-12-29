@@ -1,0 +1,47 @@
+﻿@using App.Data.Entities;
+@model List<BlogEntity>
+@{
+    int pageSize = 10;
+    int nextPage = ViewBag.Page + 1;
+    int prevPage = ViewBag.Page - 1;
+}
+<h1>unconfirm Blogs</h1>
+
+@if (Model.Count == 0)
+{
+    <p>No unconfirmed blogs to approve.</p>
+}
+else
+{
+    <table class="table mb-4 ml-4">
+        @foreach (var blog in Model)
+        {
+            <tr>
+                <td>@blog.Title</td>
+                <td class="content-preview">
+                    @if (blog.Content.Length > 100)
+                    {
+                        <p title="@blog.Content">@blog.Content.Substring(0, 100)...</p>
+                    }
+                    else
+                    {
+                        <p>@blog.Content</p>
+                    }
+                </td>
+                <td><a asp-controller="admin" asp-action="BlogConfirm" asp-route-id="@blog.Id">Confirm</a></td>
+                <td><a asp-controller="Blogger" asp-action="Edit" asp-route-id="@blog.Id">Edit</a></td>
+                <td><a asp-controller="admin" asp-action="BlogDelete" asp-route-id="@blog.Id">Delete</a></td>
+            </tr>
+        }
+    </table>
+
+    @if (prevPage > 0)
+    {
+        <a href="@Url.Action("Blogs", "Admin", new { page = prevPage })">Previous</a>
+    }
+
+    @if (Model.Count == pageSize)
+    {
+        <a href="@Url.Action("Blogs", "Admin", new { page = nextPage })">Next</a>
+    }
+}

@@ -16,7 +16,7 @@ namespace App.Data.Entities
         public string Title { get; set; }
 
         public int UserId { get; set; }
-        [Required, MaxLength(250)]
+        [Required, MaxLength(500)]
         public string Content { get; set; }
 
 
@@ -24,9 +24,11 @@ namespace App.Data.Entities
         public DateTime CreatedAt { get; set; }
 
 
-        public CategoryEntity Category { get; set; }
+       // public CategoryEntity Category { get; set; }
 
-        public UserEntity UserEntity { get; set; }
+        public int CategoryId { get; set; }
+
+        //public UserEntity User { get; set; }
         public bool Confirm { get; set; }
 
 
