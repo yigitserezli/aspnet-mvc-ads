@@ -26,8 +26,9 @@ namespace App.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.User).WithMany(z => z.AdvertComments).HasForeignKey(c=>c.UserId).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.Advert).WithMany(z => z.AdvertComments).HasForeignKey(c => c.AdvertId).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.User).WithMany(z => z.AdvertComments).HasForeignKey(c=>c.UserId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.Advert).WithMany(a => a.AdvertComments).HasForeignKey(c => c.AdvertId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.Advert).WithMany(z => z.AdvertComments).HasForeignKey(c => c.AdvertId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<CustomerFavListentity>().HasOne(c => c.User).WithMany(z => z.CustomerFavs).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<OrdersEntity>().HasOne(c => c.User).WithMany(z => z.Orders).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<OrdersEntity>().HasOne(o => o.User).WithMany(u => u.Orders).HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.ClientCascade);

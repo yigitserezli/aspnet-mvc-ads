@@ -1,0 +1,27 @@
+﻿@using App.Data.Entities;
+@model List<BlogEntity>
+
+<h1>unconfirm Blogs</h1>
+
+@foreach (var blog in Model)
+{
+    <div>
+        <h3>@blog.Title</h3>
+        <p>@blog.Content</p>
+    </div>
+}
+
+@{
+    int nextPage = Model.Count > 0 ? ViewBag.Page + 1 : ViewBag.Page;
+    int prevPage = ViewBag.Page - 1;
+}
+
+@if (prevPage > 0)
+{
+    <a href="@Url.Action("Blogs", "Admin", new { page = prevPage })">Previous</a>
+}
+
+@if (nextPage <= ViewBag.TotalPages)
+{
+    <a href="@Url.Action("Blogs", "Admin", new { page = nextPage })">Next</a>
+}

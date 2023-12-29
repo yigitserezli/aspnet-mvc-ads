@@ -1,0 +1,27 @@
+﻿@model List<App.Data.Entities.BlogEntity>
+
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Blogs List</h1>
+
+    <div class="row">
+        @foreach (var Blog in Model)
+        {
+            <div class="col-md-4">
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h5 class="card-title bg-gray">Title: @Blog.Title</h5>
+                        <p class="card-text">Description: @Blog.Content</p>
+                        <p class="card-text">Created At: @Blog.CreatedAt</p>
+                        <p class="card-text">Category: @Blog.CategoryId</p>
+                        <p class="card-text">Updated At: @Blog.Confirm</p>
+
+                        <a asp-controller="Blogger" asp-action="Edit" asp-route-id="@Blog.Id" class="btn btn-primary">Edit</a>
+                        <a asp-controller="Blogger" asp-action="MyAdDetail" asp-route-id="@Blog.Id" class="btn btn-primary">Show detail</a>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

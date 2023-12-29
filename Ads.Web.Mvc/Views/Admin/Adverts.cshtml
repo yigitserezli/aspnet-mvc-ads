@@ -1,0 +1,48 @@
+﻿@using App.Data.Entities;
+@model List<AdvertEntity>
+@{
+    int pageSize = 10;
+    int nextPage = ViewBag.Page + 1;
+    int prevPage = ViewBag.Page - 1;
+}
+<h1>Unconfirmed Adverts Comments</h1>
+
+@if (Model.Count == 0)
+{
+    <p>No Advert to confirm.</p>
+}
+else
+{
+    <table class="table mb-4 ml-4">
+        @foreach (var advert in Model)
+        {
+            <tr>
+                <td>@advert.Name</td>
+                <td class="content-preview">
+                    
+                    @if (advert.Description.Length > 100)
+                    {
+                        <p title="@advert.Description">@advert.Description.Substring(0, 100)...</p>
+                    }
+                    else
+                    {
+                        <p>@advert.Description</p>
+                    }
+                </td>
+                <td><a asp-controller="admin" asp-action="Advertconfirm" asp-route-id="@advert.Id">Confirm</a></td>
+                <td><a asp-controller="Advert" asp-action="EditComment" asp-route-id="@advert.Id">Edit (şu an pasif )</a></td>
+                <td><a asp-controller="admin" asp-action="AdvertDelete" asp-route-id="@advert.Id">Delete</a></td>
+            </tr>
+        }
+    </table>
+
+    @if (prevPage > 0)
+    {
+        <a href="@Url.Action("Adverts", "Admin", new { page = prevPage })">Previous</a>
+    }
+
+    @if (Model.Count == pageSize)
+    {
+        <a href="@Url.Action("Adverts", "Admin", new { page = nextPage })">Next</a>
+    }
+}

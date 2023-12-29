@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration.UserSecrets;
 
 
+
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Ads.Web.Mvc.Controllers
@@ -46,23 +47,32 @@ namespace Ads.Web.Mvc.Controllers
         [HttpGet]
         public IActionResult Index(bool? confirm = null)
         {
-          // user id cookiden gelecek
+            // user id cookiden gelecek
             IQueryable<AdvertEntity> advertsQuery = _dbContext.Adverts.Where(c => c.UserId == userId);
 
-            if (confirm==false)
+            if (confirm == false)
             {
                 advertsQuery = advertsQuery.Where(c => c.Confirm == false);
             }
-            if (confirm==true)
+            if (confirm == true)
             {
                 advertsQuery = advertsQuery.Where(c => c.Confirm == true);
             }
 
             var MyAdverts = advertsQuery.ToList();
 
-            return View("index",MyAdverts);
+            return View("index", MyAdverts);
         }
-        public IActionResult MyAdDetail([FromRoute] int id)
+
+  
+
+
+
+
+
+
+
+    public IActionResult MyAdDetail([FromRoute] int id)
         {
             var MyAdvert = _dbContext.Adverts
          .Include(a => a.AdvertComments)
