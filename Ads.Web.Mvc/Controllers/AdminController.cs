@@ -33,7 +33,21 @@ namespace Ads.Web.Mvc.Controllers
 
         public int userId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var pendingBlogsCount = _dbContext.Blogs.Count(c => !c.Confirm);
+            var pendingBlogCommentsCount = _dbContext.BlogComments.Count(c => !c.Confirm);
+            var pendingAdvertsCount = _dbContext.Adverts.Count(a => a.Confirm==false);
+            var pendingAdvertCommentsCount = _dbContext.AdvertComments.Count(c => !c.Confirm);
 
+            ViewBag.PendingBlogsCount = pendingBlogsCount;
+            ViewBag.PendingBlogCommentsCount = pendingBlogCommentsCount;
+            ViewBag.PendingAdvertsCount = pendingAdvertsCount;
+            ViewBag.PendingAdvertCommentsCount = pendingAdvertCommentsCount;
+
+            return View();
+        }
 
 
         [HttpGet]
@@ -102,7 +116,7 @@ namespace Ads.Web.Mvc.Controllers
 
             ViewBag.Page = page;
 
-            return View("Blogs", Blogs);
+            return View("Blogcomments", Blogs);
         }
 
         [HttpGet]
@@ -227,6 +241,69 @@ namespace Ads.Web.Mvc.Controllers
             return RedirectToAction("AdvertComments");
         }
 
+        // role settings
+        [HttpGet]
+        public IActionResult Users(string searchString, int page = 1)
+        {
+            int pageSize = 20;
+
+            var users = _dbContext.Users.Include(u => u.UserRoles).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(u => u.Username.Contains(searchString));
+            }
+
+            var paginatedUsers = users
+                .OrderBy(u => u.Username)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var totalUsers = users.Count();
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalUsers / pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.SearchString = searchString;
+
+            return View(paginatedUsers);
+        }
+    
+
+    [HttpGet]
+public IActionResult EditUserRoles(int id)
+{
+    var user = _dbContext.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefault(u => u.Id == id);
+    var allRoles = _dbContext.RoleEntities.ToList();
+
+    ViewBag.User = user;
+    ViewBag.AllRoles = allRoles;
+
+    return View(user);
+}
+
+        [HttpPost]
+        public IActionResult EditUserRoles(int userId, List<int> selectedRoleIds)
+        {
+            var user = _dbContext.Users.Include(u => u.UserRoles).FirstOrDefault(u => u.Id == userId);
+
+            if (user != null)
+            {
+                user.UserRoles.Clear();
+
+                if (selectedRoleIds != null)
+                {
+                    foreach (var roleId in selectedRoleIds)
+                    {
+                        user.UserRoles.Add(new UserRoleEntity { UserId = userId, RoleId = roleId });
+                    }
+                }
+
+                _dbContext.SaveChanges();
+            }
+
+            return RedirectToAction("Users");
+        }
 
 
 

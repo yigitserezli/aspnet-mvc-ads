@@ -1,0 +1,20 @@
+﻿@using App.Data.Entities;
+@model UserEntity
+
+<h1>Edit User Roles</h1>
+
+<h3>@Model.Username's Roles</h3>
+
+<form asp-action="EditUserRoles" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label>Select Roles:</label>
+        <select multiple class="form-control" asp-for="UserRoles">
+            @foreach (var role in ViewBag.AllRoles)
+            {
+                <option value="@role.Id">@role.Name</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

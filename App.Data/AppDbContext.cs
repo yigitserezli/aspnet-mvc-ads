@@ -21,12 +21,14 @@ namespace App.Data
         public DbSet<CustomerFavListentity> CustomerFavLists { get; set; }
         public DbSet<OrdersEntity> Orders { get; set; }
         public DbSet<RoleEntity> RoleEntities { get; set; }
-        public DbSet<UserEntity> Users { get; set; } 
+        public DbSet<UserEntity> Users { get; set; }
         public DbSet<UserRoleEntity> UserRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.User).WithMany(z => z.AdvertComments).HasForeignKey(c=>c.UserId).OnDelete(DeleteBehavior.ClientCascade);
+
+            modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.User).WithMany(z => z.AdvertComments).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientCascade);
+
 
             modelBuilder.Entity<AdvertCommentsEntity>().HasOne(c => c.Advert).WithMany(z => z.AdvertComments).HasForeignKey(c => c.AdvertId).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<CustomerFavListentity>().HasOne(c => c.User).WithMany(z => z.CustomerFavs).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientCascade);
@@ -71,13 +73,17 @@ namespace App.Data
                 },
                 new UserRoleEntity
                 {
-                    Id= 2,
+
+                    Id = 2,
+
                     RoleId = 2,
                     UserId = 1
                 }
 
 
-                ) ;
+
+                );
+
 
 
             modelBuilder.Entity<CategoryEntity>().HasData(
@@ -166,7 +172,10 @@ namespace App.Data
                      categoryPopularityIndex = 2
 
                  }
-                ) ;
+
+                );
+
+
 
 
             modelBuilder.Entity<AdvertEntity>().HasData(
@@ -200,7 +209,9 @@ namespace App.Data
                   UserId = 1
 
               }
-              ) ;
+
+              );
+
 
 
 

@@ -1,27 +1,31 @@
-﻿@using App.Data.Entities;
-@model List<BlogEntity>
+﻿<h1>Admin Panel</h1>
 
-<h1>unconfirm Blogs</h1>
-
-@foreach (var blog in Model)
-{
-    <div>
-        <h3>@blog.Title</h3>
-        <p>@blog.Content</p>
-    </div>
-}
-
-@{
-    int nextPage = Model.Count > 0 ? ViewBag.Page + 1 : ViewBag.Page;
-    int prevPage = ViewBag.Page - 1;
-}
-
-@if (prevPage > 0)
-{
-    <a href="@Url.Action("Blogs", "Admin", new { page = prevPage })">Previous</a>
-}
-
-@if (nextPage <= ViewBag.TotalPages)
-{
-    <a href="@Url.Action("Blogs", "Admin", new { page = nextPage })">Next</a>
-}
+<div>
+    <h2>Pending Items</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item Type</th>
+                <th>Pending Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Blogs</td>
+                <td><a asp-action="Blogs">(@ViewBag.PendingBlogsCount) pending</a></td>
+            </tr>
+            <tr>
+                <td>Blog Comments</td>
+                <td><a asp-action="BlogComments">(@ViewBag.PendingBlogCommentsCount) pending</a></td>
+            </tr>
+            <tr>
+                <td>Adverts</td>
+                <td><a asp-action="Adverts">(@ViewBag.PendingAdvertsCount) pending</a></td>
+            </tr>
+            <tr>
+                <td>Advert Comments</td>
+                <td><a asp-action="AdvertComments">(@ViewBag.PendingAdvertCommentsCount) pending</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
