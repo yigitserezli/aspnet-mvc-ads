@@ -35,7 +35,7 @@
  *@
 
 
-
+@* 
 
 @functions {
     public HtmlString RenderCategory2(int? id)
@@ -69,14 +69,14 @@
     <h4 class="widget-header">All Category</h4>
     @RenderCategory2(null)
 </div>
+ *@
 
 
-@*
 <div class="widget category-list">
     <h4 class="widget-header">All Category</h4>
 
     <div class="accordion" id="accordionExample">
-        @foreach(var item in Model)
+        @foreach(var item in Model.Where(x=>x.parentCategoryID==null))
         {
             string kategori = item.Name.Replace(" ", "");
             kategori = kategori + item.Id;
@@ -84,12 +84,23 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@kategori" aria-expanded="false" aria-controls="@kategori">
-                        Accordion Item #1
+                        @item.Name
                     </button>
                 </h2>
                 <div id="@kategori" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <a asp-action="Index" asp-controller="Home" asp-area="" asp-route-id="1"><span class="badge bg-primary">Tümünü Göster</span></a>
+                        <ul class="category-list">
+                        @foreach(var mitem in Model.Where(x=>x.parentCategoryID==item.Id))
+                        {
+                           
+                                <li><a asp-controller="Category" asp-action="Index" asp-route-id="@mitem.Id">@mitem.Name <span class="float-right">(2)</span></a></li>
+                             
+                            
+                            
+
+                        }
+                        </ul>
+
 
 
 
@@ -102,5 +113,4 @@
 
 </div>
 
- *@
 
