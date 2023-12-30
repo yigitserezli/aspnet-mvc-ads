@@ -20,6 +20,7 @@ namespace App.Models.CategoryDTOs
     public class SubCategory
     {
         public string Name { get; set; }
+        public int id { get; set; }
         public int AdvertCount { get; set; }
     }
 }

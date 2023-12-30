@@ -93,6 +93,7 @@ namespace Ads.Web.Mvc.Controllers
             return Ok("Favorite added");
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult AddAdvert()
         {

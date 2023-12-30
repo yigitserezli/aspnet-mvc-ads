@@ -33,13 +33,13 @@
                             <div class="card">
                                 <div class="thumb-content">
                                     <!-- <div class="price">$200</div> -->
-                                    <a href="single.html">
-                                        <img class="card-img-top img-fluid" src="images/products/products-1.jpg"
+                                    <a asp-controller="Advert" asp-action="AdDetail" asp-route-id="@item.Id">
+                                        <img class="card-img-top img-fluid" src="~/images/adverts/@item.ImageUrl"
                                              alt="Card image cap">
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title"><a href="single.html">@item.Name</a></h4>
+                                        <h4 class="card-title"><a asp-controller="Advert" asp-action="AdDetail" asp-route-id="@item.Id">@item.Name</a></h4>
                                     <ul class="list-inline product-meta">
                                         <li class="list-inline-item">
                                           
@@ -55,7 +55,7 @@
 
                                         </li>
                                         <li class="list-inline-item">
-                                            <a href="#"><i class="fa fa-calendar"></i>@item.CreatedAt</a>
+                                                <a asp-controller="Advert" asp-action="AdDetail" asp-route-id="@item.Id"><i class="fa fa-calendar"></i>@item.CreatedAt</a>
                                         </li>
                                     </ul>
                                     <p class="card-text">
