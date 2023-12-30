@@ -49,7 +49,7 @@ namespace App.Business
 
         public async Task<ServiceResult<ICollection<CategoryEntity>>> GetAllCategories()
         {
-            ICollection<CategoryEntity> allCategoriesList = await _dbContext.Categories.ToListAsync();
+            ICollection<CategoryEntity> allCategoriesList = await _dbContext.Categories.Include(adv => adv.Adverts).ToListAsync();
 
             return ServiceResult.Success(allCategoriesList);
         }
@@ -65,6 +65,7 @@ namespace App.Business
             {
                 var popularCategory = new PopularCategoriesDTO();
                 popularCategory.PopularCategoryName = item.Name;
+                popularCategory.id = item.Id;
                 popularCategoriesDTOList.Add(popularCategory);
 
             }
