@@ -1,0 +1,79 @@
+﻿@using App.Data.Entities
+@model List<UserEntity>
+
+<h1>Users</h1>
+
+<form asp-action="Users" method="get">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@ViewBag.SearchString" placeholder="Search by Username" class="form-control" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Name</td>
+                <td>
+                    @if (user.UserRoles != null)
+                    {
+                        if (user.UserRoles.Any())
+                        {
+                            foreach (var role in user.UserRoles)
+                            {
+                                if (role.Role != null)
+                                {
+                                    <span>@role.Role.Name</span>
+                                    <br />
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <span>No roles assigned</span>
+                        }
+                    }
+                    else
+                    {
+                        <span>No roles assigned</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="EditUserRoles" asp-route-id="@user.Id">Edit Roles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.TotalPages > 1)
+{
+    <div>
+        Page @(ViewBag.CurrentPage) of @ViewBag.TotalPages
+    </div>
+    <nav aria-label="Users Pagination">
+        <ul class="pagination">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li class="page-item"><a class="page-link" href="?page=1&searchString=@ViewBag.SearchString">First</a></li>
+                <li class="page-item"><a class="page-link" href="?page=@(ViewBag.CurrentPage - 1)&searchString=@ViewBag.SearchString">Previous</a></li>
+            }
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@(ViewBag.CurrentPage + 1)&searchString=@ViewBag.SearchString">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page=@ViewBag.TotalPages&searchString=@ViewBag.SearchString">Last</a></li>
+            }
+        </ul>
+    </nav>
+}

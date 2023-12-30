@@ -155,10 +155,10 @@
 <script>
 
         jQuery(document).ready(function () {
-        // Sayfa yüklendiğinde, kategorileri CategoryController'dan çekerek dropdown listesine doldur
+       
         $.ajax({
             type: "GET",
-            url: "/Category/GetParentCategories", // GetCategories adında bir action eklemeyi unutmayın
+            url: "/Category/GetParentCategories",
             success: function (data) {
                 var dropdown = $("#parentCategoryList");
                 $.each(data, function (i, item) {
