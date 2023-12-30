@@ -35,6 +35,7 @@ namespace Ads.Web.Mvc.ViewComponents
             {
                 HomePageCategoryListDTO homePageCategoryListItem = new HomePageCategoryListDTO();
                 homePageCategoryListItem.categoryName = item.Name;
+                
 
                 List<CategoryEntity> subCategories = new List<CategoryEntity>();
                 subCategories = CategoryList.Where(x => x.parentCategoryID == item.Id).Take(4).ToList();
@@ -46,6 +47,7 @@ namespace Ads.Web.Mvc.ViewComponents
                         SubCategory subCategoryItem = new SubCategory();
                         subCategoryItem.AdvertCount = _advert.GetAllAdvertsUnderGivenCategory(item.Id).Result.Data.Count() ;
                         subCategoryItem.Name = subCategory.Name;
+                        subCategoryItem.id = subCategory.Id;
                         homePageCategoryListItem.subCategories.Add(subCategoryItem);
 
                     }

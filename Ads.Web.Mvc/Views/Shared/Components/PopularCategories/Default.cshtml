@@ -9,7 +9,7 @@
         @foreach(var item in Model)
         {
         <li class="list-inline-item">
-            <a href="category.html"><i class="fa fa-bed"></i> @item.PopularCategoryName</a>
+            <a asp-controller="Category" asp-route-id="@item.id"><i class="fa fa-bed"></i> @item.PopularCategoryName</a>
         </li>
         }
     </ul>

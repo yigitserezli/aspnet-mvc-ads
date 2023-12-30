@@ -27,7 +27,7 @@
                             <ul class="category-list">
                                 @foreach(var item2 in item.subCategories)
                                 {
-                                <li><a href="category.html">@item2.Name <span>@item2.AdvertCount</span></a></li>
+                                <li><a asp-controller="Category" asp-route-id="@item2.id">@item2.Name <span>@item2.AdvertCount</span></a></li>
                                 }
                             </ul>
                         </div>

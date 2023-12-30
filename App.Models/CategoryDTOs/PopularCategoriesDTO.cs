@@ -10,5 +10,6 @@ namespace App.Models.CategoryDTOs
     public class PopularCategoriesDTO
     {
         public string PopularCategoryName { get; set; }
+        public int id { get; set; }
     }
 }

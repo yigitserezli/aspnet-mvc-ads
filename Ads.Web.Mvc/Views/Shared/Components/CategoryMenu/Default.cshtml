@@ -93,7 +93,7 @@
                         @foreach(var mitem in Model.Where(x=>x.parentCategoryID==item.Id))
                         {
                            
-                                <li><a asp-controller="Category" asp-action="Index" asp-route-id="@mitem.Id">@mitem.Name <span class="float-right">(2)</span></a></li>
+                                <li><a asp-controller="Category" asp-action="Index" asp-route-id="@mitem.Id">@mitem.Name <span class="float-right">@mitem.Adverts.Count()</span></a></li>
                              
                             
                             
